@@ -36,6 +36,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
     private TextView mSearchView;
     private ListView mListView;
     private ImageView mLoadingView;
+    private BaseRecommandModel mBaseRecommandModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +52,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
             @Override
             public void onSuccess(Object responseObj) {
                 Log.i("MYTAG","----onSuccess" + ((BaseRecommandModel)responseObj).data.list.size());
+                mBaseRecommandModel = (BaseRecommandModel)responseObj;
+                showSuccessView();
             }
 
             @Override
@@ -58,6 +61,34 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
                 Log.i("MYTAG","----onFailure");
             }
         });
+    }
+
+    /**
+     * 请求成功后调用方法
+     */
+    private void showSuccessView() {
+        if(mBaseRecommandModel!=null){
+            //判断数据非空
+            if(mBaseRecommandModel.data.list !=null && mBaseRecommandModel.data.list.size()>0){
+                mLoadingView.setVisibility(View.GONE);
+                mLoadingView.setVisibility(View.VISIBLE);
+                //创建Adapter
+               // mListView.setAdapter();
+
+            }else{
+                showErrorView();
+            }
+
+        }else{
+
+        }
+    }
+
+    /**
+     * 请求失败方法
+     */
+    private void showErrorView() {
+
     }
 
     @Nullable
