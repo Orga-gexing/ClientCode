@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xingfire.clientcode.R;
+import com.xingfire.clientcode.adapter.CourseAdapter;
 import com.xingfire.clientcode.module.recommand.BaseRecommandModel;
 import com.xingfire.clientcode.module.recommand.RecommandModel;
 import com.xingfire.clientcode.network.http.HttpConstants;
@@ -70,10 +71,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,A
         if(mBaseRecommandModel!=null){
             //判断数据非空
             if(mBaseRecommandModel.data.list !=null && mBaseRecommandModel.data.list.size()>0){
+                Log.i("MYTAG","---data.list = "+mBaseRecommandModel.data.list);
                 mLoadingView.setVisibility(View.GONE);
-                mLoadingView.setVisibility(View.VISIBLE);
+                mListView.setVisibility(View.VISIBLE);
                 //创建Adapter
-               // mListView.setAdapter();
+                CourseAdapter adapter = new CourseAdapter(getActivity(),mBaseRecommandModel.data.list);
+                mListView.setAdapter(adapter);
 
             }else{
                 showErrorView();
